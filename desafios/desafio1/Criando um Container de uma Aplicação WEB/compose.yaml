@@ -1,0 +1,16 @@
+services:
+  web:
+    image: httpd:latest
+    container_name: my-apache-app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./website:/usr/local/apache2/htdocs
+    environment:
+      - APACHE_LOG_DIR=/var/log/apache2
+    healthcheck:
+      test: ["CMD", "httpd", "-t"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
